@@ -108,7 +108,7 @@ const App: React.FC = () => {
     <div className="min-h-screen p-6 bg-gradient-to-br from-blue-300 to-white">
       {/* <h1 className="text-4xl font-bold text-center mb-8">MeetScan</h1> */}
       <h1 className="text-4xl font-bold text-center mb-8">
-        MeetScan <span className="italic font-bold bg-gradient-to-r to-black from-silver-600 bg-clip-text text-transparent">Pro</span>
+        MeetScan <span className="italic font-bold bg-gradient-to-r from-sky-500 to-indigo-500 bg-clip-text text-transparent">Pro</span>
       </h1>
       {/* Show notification if it exists */}
       {notification && (
@@ -129,6 +129,7 @@ const App: React.FC = () => {
         <>
           <h3 className="text-2xl mb-4">Event: {event.name}</h3>
           <Timer duration={event.duration} active={timerActive} onEnd={handleEventEnd} />
+          <ScanArea onSave={handleSaveScan} />
         </>
       ) : (
         <>

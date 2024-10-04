@@ -16,10 +16,7 @@ code {
 @tailwind utilities;
 
 @layer utilities {
-  .from-silver-300 {
-    --tw-gradient-from: #0e0a0a; /* Light silver */
-  }
-  .to-silver-600 {
+  .from-silver-600 {
     --tw-gradient-to: #A0A0A0; /* Darker silver */
   }
 }
