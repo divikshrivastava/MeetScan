@@ -12,6 +12,7 @@ interface ScanAreaProps {
 }
 
 const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
+  const [showNotification, setShowNotification] = useState(false);
   const [scannedData, setScannedData] = useState('');
   const [name, setName] = useState('');
   const [notes, setNotes] = useState('');
@@ -31,6 +32,12 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
       const scannedUrl = result[0]?.rawValue;
       setScannedData(scannedUrl);
       identifyLinkType(scannedUrl); // Identify type of link using regex
+      
+      // Show notification for half a second
+      setShowNotification(true);
+      setTimeout(() => {
+        setShowNotification(false);
+      }, 500);
     }
   };
 
@@ -80,27 +87,18 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
 
   return (
     <div className="mt-6">
-      <div className="flex justify-between items-center mb-4">
-        <h4 className="text-xl font-semibold">Scan QR Code</h4>
-        
-        {/* Neumorphic Segmented Button */}
-        <div className="flex space-x-2">
-          <button
-            className={`p-3 rounded-l-lg focus:outline-none ${
-              showScanner ? 'bg-gray-300' : 'bg-gray-200 shadow-inner'
-            }`}
-            onClick={() => setShowScanner(true)}
-          >
-            Scan
-          </button>
-          <button
-            className={`p-3 rounded-r-lg focus:outline-none ${
-              !showScanner ? 'bg-gray-300' : 'bg-gray-200 shadow-inner'
-            }`}
-            onClick={() => setShowScanner(false)}
-          >
-            Show my QR
-          </button>
+      <div className="flex justify-center items-center mb-4">
+        <div className="flex justify space-x-2">
+          <div className="radio-inputs">
+            <label className="radio">
+              <input type="radio" name="mode" checked={showScanner} onChange={() => setShowScanner(true)} />
+              <span className="name">Scan QR code</span>
+            </label>
+            <label className="radio">
+              <input type="radio" name="mode" checked={!showScanner} onChange={() => setShowScanner(false)} />
+              <span className="name">Show my QR</span>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -121,6 +119,11 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
             ) : (
               <p>Upload your QR code</p>
             )}
+          </div>
+        )}
+        {showNotification && (
+          <div className="absolute top-4 bg-green-500 text-white px-4 py-2 rounded shadow-md">
+            URL Scanned Successfully
           </div>
         )}
       </div>

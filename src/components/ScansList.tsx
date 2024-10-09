@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-// Import the icons for the popular URLs
 import linkedinIcon from '../icons/linkedin.svg';
 import bitlyIcon from '../icons/bitly.svg';
 import instagramIcon from '../icons/instagram.svg';
@@ -38,7 +37,9 @@ const ScansList: React.FC<ScansListProps> = ({ scans, onEdit, onDelete }) => {
   return (
     <div className="mt-6">
       <h4 className="text-2xl font-semibold mb-4">Latest Scans</h4>
-      {scans.map((scan) => (
+      { scans.length === 0 ? (
+        <p className="text-lg text-gray-500">None</p>
+      ) : ( scans.map((scan) => (
         <div key={scan.url} className="bg-white rounded-lg p-4 shadow-lg mb-4">
           {editingScan && editingScan.url === scan.url ? (
             <>
@@ -98,7 +99,7 @@ const ScansList: React.FC<ScansListProps> = ({ scans, onEdit, onDelete }) => {
             </>
           )}
         </div>
-      ))}
+      )))}
     </div>
   );
 };
