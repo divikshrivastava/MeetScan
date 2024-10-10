@@ -118,6 +118,7 @@ const App: React.FC = () => {
         <>
           <h3 className="text-2xl mb-4">Event: {event.name}</h3>
           <Timer duration={event.duration} active={timerActive} onEnd={handleEventEnd} />
+          <ScanArea onSave={handleSaveScan} />
         </>
       ) : (
         <>

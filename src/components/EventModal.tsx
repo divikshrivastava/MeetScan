@@ -9,12 +9,19 @@ interface EventModalProps {
 const EventModal: React.FC<EventModalProps> = ({ onSave, event, setTimerActive }) => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(event);
+  const [error, setError] = useState('');
 
   const handleSubmit = () => {
-    const duration = (formData.durationHours * 60 + formData.durationMinutes) * 60 * 1000;
-    onSave({ ...formData, duration });
-    setTimerActive(true);
-    setShowModal(false);
+    const minutes = formData.durationMinutes ?? 0
+    if (minutes < 1 || minutes > 60) {
+      setError('Minutes must be between 0 and 60');
+    } else {
+      setError('');
+      const duration = (formData.durationHours ?? 0 * 60 + formData.durationMinutes) * 60 * 1000;
+      onSave({ ...formData, duration });
+      setTimerActive(true);
+      setShowModal(false);
+    }
   };
 
   return (
@@ -40,6 +47,7 @@ const EventModal: React.FC<EventModalProps> = ({ onSave, event, setTimerActive }
             </div>
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">Event Duration</label>
+              <div className='flex-col'>
               <div className="flex space-x-2">
                 <input
                   type="number"
@@ -47,12 +55,17 @@ const EventModal: React.FC<EventModalProps> = ({ onSave, event, setTimerActive }
                   placeholder="Hours"
                   onChange={(e) => setFormData({ ...formData, durationHours: parseInt(e.target.value, 10) })}
                 />
+                
                 <input
                   type="number"
                   className="w-1/2 p-2 border rounded"
                   placeholder="Minutes"
+                  min={1}
+                  max={60}
                   onChange={(e) => setFormData({ ...formData, durationMinutes: parseInt(e.target.value, 10) })}
                 />
+                {error && <div className='text-sm text-red-700'>{error}</div>}
+              </div>
               </div>
             </div>
             <div className="mb-4">
