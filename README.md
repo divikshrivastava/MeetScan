@@ -5,7 +5,7 @@ MeetScan Pro is a smart QR code scanner application designed to streamline netwo
 [**Try it out now!**](https://meetscan.pro)
 
 <img width="358" alt="Screenshot 2024-10-10 at 10 33 21 AM" src="https://github.com/user-attachments/assets/16f6cdd1-62f8-47ce-9fd3-3d89db3ebe59">
----
+
 
 ## 🌟 Key Features
 
