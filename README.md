@@ -2,9 +2,9 @@
 
 **Supercharge your networking with the help of MeetScan, your perfect event companion!**  
 MeetScan Pro is a smart QR code scanner application designed to streamline networking at events. It allows users to scan, save, and categorize contacts with ease, ensuring you stay connected with the people you meet—whether at conferences, meetups, or casual events. With MeetScan Pro, you can quickly exchange contact information, keep notes, and even identify the type of links scanned (LinkedIn, Instagram, websites, etc.) for a more personalized experience.
-<img width="358" alt="Screenshot 2024-10-10 at 10 33 21 AM" src="https://github.com/user-attachments/assets/16f6cdd1-62f8-47ce-9fd3-3d89db3ebe59">
 [**Try it out now!**](https://meetscan.pro)
-
+---
+<img width="358" alt="Screenshot 2024-10-10 at 10 33 21 AM" src="https://github.com/user-attachments/assets/16f6cdd1-62f8-47ce-9fd3-3d89db3ebe59">
 ---
 
 ## 🌟 Key Features
