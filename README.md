@@ -3,7 +3,7 @@
 **Supercharge your networking with the help of MeetScan, your perfect event companion!**  
 MeetScan Pro is a smart QR code scanner application designed to streamline networking at events. It allows users to scan, save, and categorize contacts with ease, ensuring you stay connected with the people you meet—whether at conferences, meetups, or casual events. With MeetScan Pro, you can quickly exchange contact information, keep notes, and even identify the type of links scanned (LinkedIn, Instagram, websites, etc.) for a more personalized experience.
 
-[**Try it out now!**](https://example.com) (Replace this with your live link)
+[**Try it out now!**](https://meetscan.pro)
 
 ---
 
@@ -20,11 +20,16 @@ MeetScan Pro is a smart QR code scanner application designed to streamline netwo
 
 - **iOS and Android App Development**: Native mobile apps for enhanced scanning experiences at your fingertips.
 - **Expanded Link Detection**: Detect even more platforms such as Twitter, GitHub, WhatsApp, and more.
+- **Personal Connections Directory**: Have a personal directory of all contacts you scanned.
+- **MeetScan Dynamic QR**: Create a QR code, which will have all the profiles linked, similar to linktree except you will know who scanned you.
+- **Event history and Future event Scheduling**: To enable users to view the events they went to, and to allow them to schedule events from Calendar, Eventbrite, Meetup, etc.
+- **Networking Statistics**: To showcase and analyse how widespread is your networking reach and of what kind in the form of pie chart, bar chart, etc.
 - **Team Networking**: Create shared events where team members can see who has scanned whom, perfect for company events.
 - **Dark Mode Support**: Switch to dark mode for more comfortable scanning in low-light environments.
 - **Custom Tagging**: Add tags to your scans (e.g., potential employer, client, investor) to organize your connections better.
 - **Calendar Integration**: Automatically schedule follow-ups based on the people you scan using Google Calendar or Outlook.
 - **Social Proof**: View mutual connections when scanning LinkedIn profiles to enhance networking confidence.
+- **Unit Test and Integrating Tests**: To ensure all the code is functional and free from bugs, as well as to support long term Open Source development.
 
 ---
 
@@ -70,7 +75,7 @@ If you’re excited to jump in, here are some tasks to get started with:
 
 ## 💬 Community
 
-Join our [Discord Community](https://discord.gg/yourlink) (Replace this with your community link) to collaborate with other contributors, share ideas, and get real-time support from the development team.
+Join our [Discord Community](https://discord.gg/rvZSbMQJ4y) to collaborate with other contributors, share ideas, and get real-time support from the development team.
 
 ---
 
