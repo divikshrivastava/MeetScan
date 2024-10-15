@@ -93,7 +93,7 @@ const App: React.FC = () => {
     <div className="min-h-screen p-6 bg-gradient-to-br from-blue-300 to-white">
       
 
-      <h1 className="text-4xl font-bold text-center mb-8">
+      <h1 className="text-4xl font-bold text-center mb-8 mt-8">
         MeetScan <span className="italic font-bold bg-gradient-to-r from-sky-500 to-indigo-500 bg-clip-text text-transparent">Pro</span>
       </h1>
 
@@ -139,6 +139,7 @@ const App: React.FC = () => {
       <footer className="text-center text-sm text-gray-500 mt-8">
       <div className="flex justify-between items-center mb-8">
         {/* GitHub Stars Button */}
+        <div className='flex-col'>
         <a
           href="https://github.com/divikshrivastava/SuperConnector"
           className="flex items-center text-xs font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-black text-white shadow hover:bg-black/90 h-10 px-3 py-1 whitespace-pre group relative w-auto justify-center gap-2 rounded-md transition-all duration-300 ease-out hover:ring-2 hover:ring-black hover:ring-offset-2"
@@ -165,7 +166,25 @@ const App: React.FC = () => {
             </div>
           </div>
         </a>
-
+        <a
+          href="https://discord.gg/rvZSbMQJ4y"
+          className="flex items-center text-xs font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-white shadow bg-indigo-400 hover:bg-black/90 h-10 px-3 py-1 whitespace-pre group relative w-auto justify-center gap-2 rounded-md transition-all duration-300 ease-out hover:ring-2 hover:ring-black hover:ring-offset-2 mt-1"
+        >
+         <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      preserveAspectRatio="xMidYMid"
+      viewBox="0 -28.5 256 256"
+    >
+      <path
+        fill="#5865F2"
+        d="M216.856 16.597A208.502 208.502 0 00164.042 0c-2.275 4.113-4.933 9.645-6.766 14.046-19.692-2.961-39.203-2.961-58.533 0-1.832-4.4-4.55-9.933-6.846-14.046a207.809 207.809 0 00-52.855 16.638C5.618 67.147-3.443 116.4 1.087 164.956c22.169 16.555 43.653 26.612 64.775 33.193A161.094 161.094 0 0079.735 175.3a136.413 136.413 0 01-21.846-10.632 108.636 108.636 0 005.356-4.237c42.122 19.702 87.89 19.702 129.51 0a131.66 131.66 0 005.355 4.237 136.07 136.07 0 01-21.886 10.653c4.006 8.02 8.638 15.67 13.873 22.848 21.142-6.58 42.646-16.637 64.815-33.213 5.316-56.288-9.08-105.09-38.056-148.36zM85.474 135.095c-12.645 0-23.015-11.805-23.015-26.18s10.149-26.2 23.015-26.2c12.867 0 23.236 11.804 23.015 26.2.02 14.375-10.148 26.18-23.015 26.18zm85.051 0c-12.645 0-23.014-11.805-23.014-26.18s10.148-26.2 23.014-26.2c12.867 0 23.236 11.804 23.015 26.2 0 14.375-10.148 26.18-23.015 26.18z"
+      ></path>
+    </svg>
+          <span className="ml-1 text-white">Join our community</span>
+        </a>
+        </div>
         {/* Scan Counter */}
         {process.env.REACT_APP_COUNTER === '1' && (
            
