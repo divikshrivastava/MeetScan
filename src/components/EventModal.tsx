@@ -17,7 +17,7 @@ const EventModal: React.FC<EventModalProps> = ({ onSave, event, setTimerActive }
       setError('Minutes must be between 0 and 60');
     } else {
       setError('');
-      const duration = (formData.durationHours ?? 0 * 60 + formData.durationMinutes) * 60 * 1000;
+      const duration = ((formData.durationHours ?? 0) * 60 + formData.durationMinutes) * 60 * 1000;
       onSave({ ...formData, duration });
       setTimerActive(true);
       setShowModal(false);
