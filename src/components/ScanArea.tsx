@@ -6,9 +6,11 @@ import linkedinIcon from '../icons/linkedin.svg';
 import bitlyIcon from '../icons/bitly.svg';
 import instagramIcon from '../icons/instagram.svg';
 import websiteIcon from '../icons/website.svg';
+import tiktokIcon from '../icons/tiktok.svg';
 import wikipediaIcon from '../icons/wikipedia.svg'
 import xyzIcon from '../icons/xyz.svg';
 import amazonIcon from '../icons/amazon.svg';
+
 
 interface ScanAreaProps {
   onSave: (scan: any) => void;
@@ -21,7 +23,7 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
   const [notes, setNotes] = useState('');
   const [showScanner, setShowScanner] = useState(true); // Active scanner by default
   const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
-  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'instagram' | 'website' | 'wikipedia' | 'xyz' | 'amazon' | 'unknown'>('unknown'); // Type of link detected
+  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'instagram' | 'tiktok' | 'website' | 'wikipedia' | 'xyz' | 'amazon' | 'unknown'>('unknown'); // Type of link detected
 
 
   useEffect(() => {
@@ -52,10 +54,12 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
       setLinkType('bitly');
     } else if (/instagram\.com/.test(url)) {
       setLinkType('instagram');
-    }
-     else if (/wikipedia\.com/.test(url)) {
+    } else if (/tiktok\.com/.test(url)) {
+      setLinkType('tiktok');
+    } else if (/wikipedia\.com/.test(url)) {
       setLinkType('wikipedia');
-    }else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
+    }
+     else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
       setLinkType('website');
     } else if (/xyz\.com/.test(url)) {
       setLinkType('xyz');
@@ -89,6 +93,8 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
         return <img src={bitlyIcon} alt="Bitly" className="h-6 w-6" />;
       case 'instagram':
         return <img src={instagramIcon} alt="Instagram" className="h-6 w-6" />;
+       case 'tiktok':
+        return <img src={tiktokIcon} alt="Tiktok" className="h-6 w-6" />;
         case 'wikipedia':
         return <img src={wikipediaIcon} alt="Wikipedia" className="h-6 w-6" />;
       case 'website':
