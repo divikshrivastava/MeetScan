@@ -7,6 +7,10 @@ import bitlyIcon from '../icons/bitly.svg';
 import instagramIcon from '../icons/instagram.svg';
 import websiteIcon from '../icons/website.svg';
 import tiktokIcon from '../icons/tiktok.svg';
+import wikipediaIcon from '../icons/wikipedia.svg'
+import xyzIcon from '../icons/xyz.svg';
+import amazonIcon from '../icons/amazon.svg';
+
 
 interface ScanAreaProps {
   onSave: (scan: any) => void;
@@ -19,9 +23,9 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
   const [notes, setNotes] = useState('');
   const [showScanner, setShowScanner] = useState(true); // Active scanner by default
   const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
-  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'tiktok' | 'instagram' | 'website' | 'unknown'>('unknown'); // Type of link detected
-  
-  
+  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'instagram' | 'tiktok' | 'website' | 'wikipedia' | 'xyz' | 'amazon' | 'unknown'>('unknown'); // Type of link detected
+
+
   useEffect(() => {
     const savedQrCode = localStorage.getItem('qrCode');
     if (savedQrCode) {
@@ -52,8 +56,15 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
       setLinkType('instagram');
     } else if (/tiktok\.com/.test(url)) {
       setLinkType('tiktok');
-    } else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
+    } else if (/wikipedia\.com/.test(url)) {
+      setLinkType('wikipedia');
+    }
+     else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
       setLinkType('website');
+    } else if (/xyz\.com/.test(url)) {
+      setLinkType('xyz');
+    } else if (/amazon\.com/.test(url)); {
+      setLinkType('amazon');
     } else {
       setLinkType('unknown');
     }
@@ -84,8 +95,14 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
         return <img src={instagramIcon} alt="Instagram" className="h-6 w-6" />;
        case 'tiktok':
         return <img src={tiktokIcon} alt="Tiktok" className="h-6 w-6" />;
+        case 'wikipedia':
+        return <img src={wikipediaIcon} alt="Wikipedia" className="h-6 w-6" />;
       case 'website':
         return <img src={websiteIcon} alt="Website" className="h-6 w-6" />;
+      case 'xyz':
+        return <img src={xyzIcon} alt="xyz" className="h-6 w-6" />;
+      case 'amazon':
+        return <img src={amazonIcon} alt="Amazon" className="h-6 w-6" />;
       default:
         return <p>URL</p>;
     }
