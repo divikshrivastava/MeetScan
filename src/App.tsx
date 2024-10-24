@@ -4,7 +4,7 @@ import EventModal from './components/EventModal';
 import Timer from './components/Timer';
 import ScanArea from './components/ScanArea';
 import ScansList from './components/ScansList';
-import { sendScansEmail } from './emailService'; // Import the email service
+import { sendScansEmail } from './emailService'; // Import the email
 
 const App: React.FC = () => {
   const [profile, setProfile] = useState({ name: '', email: '', qrCode: '' });
