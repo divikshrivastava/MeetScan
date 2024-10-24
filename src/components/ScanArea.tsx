@@ -6,6 +6,7 @@ import linkedinIcon from '../icons/linkedin.svg';
 import bitlyIcon from '../icons/bitly.svg';
 import instagramIcon from '../icons/instagram.svg';
 import websiteIcon from '../icons/website.svg';
+import twitterIcon from '../icons/twitter.svg';
 import netflixIcon from '../icons/netflix.svg';
 import tiktokIcon from '../icons/tiktok.svg';
 import wikipediaIcon from '../icons/wikipedia.svg'
@@ -24,7 +25,7 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
   const [notes, setNotes] = useState('');
   const [showScanner, setShowScanner] = useState(true); // Active scanner by default
   const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
-  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'netflix' |'instagram' | 'tiktok' | 'website' | 'wikipedia' | 'xyz' | 'amazon' | 'unknown'>('unknown'); // Type of link detected
+  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'netflix' |'instagram' | 'twitter' | 'tiktok' | 'website' | 'wikipedia' | 'xyz' | 'amazon' | 'unknown'>('unknown'); // Type of link detected
 
   useEffect(() => {
     const savedQrCode = localStorage.getItem('qrCode');
@@ -54,12 +55,17 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
       setLinkType('bitly');
     } else if (/instagram\.com/.test(url)) {
       setLinkType('instagram');
+    }
+    else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
     }  else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
     } else if (/tiktok\.com/.test(url)) {
       setLinkType('tiktok');
     } else if (/wikipedia\.com/.test(url)) {
       setLinkType('wikipedia');
     }
+         else if (/twitter\.com/.test(url)) {
+      setLinkType('twitter');
+    } 
         else if (/netflix\.com/.test(url)) {
       setLinkType('netflix');
     }
@@ -97,6 +103,8 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
         return <img src={bitlyIcon} alt="Bitly" className="h-6 w-6" />;
       case 'instagram':
         return <img src={instagramIcon} alt="Instagram" className="h-6 w-6" />;
+      case 'twitter':
+        return <img src={twitterIcon} alt="Twitter" className="h-6 w-6" />;
          case 'netflix':
         return <img src={netflixIcon} alt="Netflix" className="h-6 w-6" />;
        case 'tiktok':
