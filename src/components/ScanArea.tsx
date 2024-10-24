@@ -6,6 +6,7 @@ import linkedinIcon from '../icons/linkedin.svg';
 import bitlyIcon from '../icons/bitly.svg';
 import instagramIcon from '../icons/instagram.svg';
 import websiteIcon from '../icons/website.svg';
+import wikipediaIcon from '../icons/wikipedia.svg'
 import xyzIcon from '../icons/xyz.svg';
 import amazonIcon from '../icons/amazon.svg';
 
@@ -20,7 +21,8 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
   const [notes, setNotes] = useState('');
   const [showScanner, setShowScanner] = useState(true); // Active scanner by default
   const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
-  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'instagram' | 'website' | 'xyz' | 'amazon' | 'unknown'>('unknown'); // Type of link detected
+  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'instagram' | 'website' | 'wikipedia' | 'xyz' | 'amazon' | 'unknown'>('unknown'); // Type of link detected
+
 
   useEffect(() => {
     const savedQrCode = localStorage.getItem('qrCode');
@@ -50,7 +52,10 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
       setLinkType('bitly');
     } else if (/instagram\.com/.test(url)) {
       setLinkType('instagram');
-    } else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
+    }
+     else if (/wikipedia\.com/.test(url)) {
+      setLinkType('wikipedia');
+    }else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
       setLinkType('website');
     } else if (/xyz\.com/.test(url)) {
       setLinkType('xyz');
@@ -84,6 +89,8 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
         return <img src={bitlyIcon} alt="Bitly" className="h-6 w-6" />;
       case 'instagram':
         return <img src={instagramIcon} alt="Instagram" className="h-6 w-6" />;
+        case 'wikipedia':
+        return <img src={wikipediaIcon} alt="Wikipedia" className="h-6 w-6" />;
       case 'website':
         return <img src={websiteIcon} alt="Website" className="h-6 w-6" />;
       case 'xyz':
