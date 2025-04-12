@@ -1,3 +1,4 @@
+// ProfileModal.tsx
 import React, { useState, useEffect } from 'react';
 
 interface ProfileModalProps {
@@ -7,23 +8,32 @@ interface ProfileModalProps {
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ onSave, profile }) => {
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState(profile);
+  // Initialize customTags to an empty array if not provided
+  const [formData, setFormData] = useState({
+    ...profile,
+    customTags: profile.customTags || [],
+  });
+  const [newTag, setNewTag] = useState('');
   const [qrCodePreview, setQrCodePreview] = useState<string | null>(null);
 
   useEffect(() => {
-    // Load name, email, and QR code from local storage if available
+    // Load values from local storage if available
     const savedName = localStorage.getItem('name');
     const savedEmail = localStorage.getItem('email');
     const savedQrCode = localStorage.getItem('qrCode');
+    const savedTags = localStorage.getItem('customTags');
 
     if (savedName) {
-      setFormData((prevData: any) => ({ ...prevData, name: savedName }));
+      setFormData((prev: any) => ({ ...prev, name: savedName }));
     }
     if (savedEmail) {
-      setFormData((prevData: any) => ({ ...prevData, email: savedEmail }));
+      setFormData((prev: any) => ({ ...prev, email: savedEmail }));
     }
     if (savedQrCode) {
       setQrCodePreview(savedQrCode);
+    }
+    if (savedTags) {
+      setFormData((prev: any) => ({ ...prev, customTags: JSON.parse(savedTags) }));
     }
   }, []);
 
@@ -34,7 +44,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ onSave, profile }) => {
       reader.onloadend = () => {
         const qrCodeDataUrl = reader.result as string;
         setQrCodePreview(qrCodeDataUrl);
-        localStorage.setItem('qrCode', qrCodeDataUrl); // Save QR code image to local storage
+        localStorage.setItem('qrCode', qrCodeDataUrl);
         setFormData({ ...formData, qrCode: qrCodeDataUrl });
       };
       reader.readAsDataURL(file);
@@ -44,13 +54,31 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ onSave, profile }) => {
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
     setFormData({ ...formData, name: newName });
-    localStorage.setItem('name', newName); // Save name to local storage
+    localStorage.setItem('name', newName);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = e.target.value;
     setFormData({ ...formData, email: newEmail });
-    localStorage.setItem('email', newEmail); // Save email to local storage
+    localStorage.setItem('email', newEmail);
+  };
+
+  // Add a new tag if valid
+  const handleAddTag = () => {
+    const trimmedTag = newTag.trim();
+    if (trimmedTag && formData.customTags.length < 5) {
+      const updatedTags = [...formData.customTags, trimmedTag];
+      setFormData({ ...formData, customTags: updatedTags });
+      localStorage.setItem('customTags', JSON.stringify(updatedTags));
+      setNewTag('');
+    }
+  };
+
+  // Remove tag by index
+  const handleRemoveTag = (index: number) => {
+    const updatedTags = formData.customTags.filter((_: any, i: number) => i !== index);
+    setFormData({ ...formData, customTags: updatedTags });
+    localStorage.setItem('customTags', JSON.stringify(updatedTags));
   };
 
   const handleSubmit = () => {
@@ -87,6 +115,42 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ onSave, profile }) => {
                 value={formData.email}
                 onChange={handleEmailChange}
               />
+            </div>
+            {/* New: Custom Tags input */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Custom Tags (up to 5)</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded"
+                  placeholder="Enter tag"
+                  value={newTag}
+                  onChange={(e) => setNewTag(e.target.value)}
+                />
+                <button
+                  className="bg-green-500 text-white px-3 py-2 rounded"
+                  onClick={handleAddTag}
+                  disabled={formData.customTags.length >= 5}
+                >
+                  Add
+                </button>
+              </div>
+              <div className="flex flex-wrap mt-2 gap-2">
+                {formData.customTags.map((tag: string, index: number) => (
+                  <div
+                    key={index}
+                    className="inline-flex items-center bg-sky-200 text-sky-800 px-2 py-1 rounded-full"
+                  >
+                    <span>{tag}</span>
+                    <button
+                      className="ml-1 text-sm font-bold"
+                      onClick={() => handleRemoveTag(index)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">QR Code</label>

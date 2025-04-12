@@ -7,7 +7,7 @@ import ScansList from './components/ScansList';
 import { sendScansEmail } from './emailService'; // Import the email
 
 const App: React.FC = () => {
-  const [profile, setProfile] = useState({ name: '', email: '', qrCode: '' });
+  const [profile, setProfile] = useState({ name: '', email: '', qrCode: '', customTags: [] });
   const [event, setEvent] = useState({ name: '', duration: 0, description: '' });
   const [scans, setScans] = useState<any[]>([]);
   const [timerActive, setTimerActive] = useState(false);
@@ -115,24 +115,26 @@ const App: React.FC = () => {
 
       {/* Conditionally render timer and event-related content */}
       {event.name && !timerEnded ? (
-        <>
-          <h3 className="text-2xl mb-4">Event: {event.name}</h3>
-          <Timer duration={event.duration} active={timerActive} onEnd={handleEventEnd} />
-          <ScanArea onSave={handleSaveScan} />
-        </>
-      ) : (
-        <>
-          <ScanArea onSave={handleSaveScan} />
-          {showEmailButton && (
-            <button
-              className="bg-blue-500 text-white p-3 rounded-lg mt-4"
-              onClick={handleEmailScans}
-            >
-              Email Scans
-            </button>
-          )}
-        </>
-      )}
+  <>
+    <h3 className="text-2xl mb-4">Event: {event.name}</h3>
+    <Timer duration={event.duration} active={timerActive} onEnd={handleEventEnd} />
+    {/* Pass the customTags from profile */}
+    <ScanArea onSave={handleSaveScan} customTags={profile.customTags || []} />
+  </>
+) : (
+  <>
+    {/* Pass customTags when not in event mode as well */}
+    <ScanArea onSave={handleSaveScan} customTags={profile.customTags || []} />
+    {showEmailButton && (
+      <button
+        className="bg-blue-500 text-white p-3 rounded-lg mt-4"
+        onClick={handleEmailScans}
+      >
+        Email Scans
+      </button>
+    )}
+  </>
+)}
 
       <ScansList scans={scans} onEdit={handleSaveProfile} onDelete={(url) => setScans((prev) => prev.filter((scan) => scan.url !== url))} />
       

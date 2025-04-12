@@ -1,7 +1,6 @@
+// ScanArea.tsx
 import React, { useState, useEffect } from 'react';
 import { Scanner } from '@yudiel/react-qr-scanner';
-
-// You can replace these with actual SVGs or image imports
 import linkedinIcon from '../icons/linkedin.svg';
 import bitlyIcon from '../icons/bitly.svg';
 import instagramIcon from '../icons/instagram.svg';
@@ -9,22 +8,26 @@ import websiteIcon from '../icons/website.svg';
 import twitterIcon from '../icons/twitter.svg';
 import netflixIcon from '../icons/netflix.svg';
 import tiktokIcon from '../icons/tiktok.svg';
-import wikipediaIcon from '../icons/wikipedia.svg'
+import wikipediaIcon from '../icons/wikipedia.svg';
 import amazonIcon from '../icons/amazon.svg';
-
 
 interface ScanAreaProps {
   onSave: (scan: any) => void;
+  // List of custom tags from the user's profile
+  customTags?: string[];
 }
 
-const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
+const ScanArea: React.FC<ScanAreaProps> = ({ onSave, customTags = [] }) => {
   const [showNotification, setShowNotification] = useState(false);
   const [scannedData, setScannedData] = useState('');
   const [name, setName] = useState('');
   const [notes, setNotes] = useState('');
-  const [showScanner, setShowScanner] = useState(true); // Active scanner by default
+  const [showScanner, setShowScanner] = useState(true);
   const [qrCodeImage, setQrCodeImage] = useState<string | null>(null);
-  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'netflix' |'instagram' | 'twitter' | 'tiktok' | 'website' | 'wikipedia' | 'amazon' | 'unknown'>('unknown'); // Type of link detected
+  const [linkType, setLinkType] = useState<'linkedin' | 'bitly' | 'netflix' | 'instagram' | 'twitter' | 'tiktok' | 'website' | 'wikipedia' | 'amazon' | 'unknown'>('unknown');
+  
+  // New state: selected tags (an array)
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   useEffect(() => {
     const savedQrCode = localStorage.getItem('qrCode');
@@ -37,13 +40,9 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
     if (result && result[0]?.rawValue) {
       const scannedUrl = result[0]?.rawValue;
       setScannedData(scannedUrl);
-      identifyLinkType(scannedUrl); // Identify type of link using regex
-      
-      // Show notification for half a second
+      identifyLinkType(scannedUrl);
       setShowNotification(true);
-      setTimeout(() => {
-        setShowNotification(false);
-      }, 500);
+      setTimeout(() => setShowNotification(false), 500);
     }
   };
 
@@ -54,42 +53,47 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
       setLinkType('bitly');
     } else if (/instagram\.com/.test(url)) {
       setLinkType('instagram');
-    }
-    else if (/tiktok\.com/.test(url)) {
+    } else if (/tiktok\.com/.test(url)) {
       setLinkType('tiktok');
     } else if (/wikipedia\.com/.test(url)) {
       setLinkType('wikipedia');
-    }
-         else if (/twitter\.com/.test(url)) {
+    } else if (/twitter\.com/.test(url)) {
       setLinkType('twitter');
-    } 
-        else if (/netflix\.com/.test(url)) {
+    } else if (/netflix\.com/.test(url)) {
       setLinkType('netflix');
-    }
-    else if (/amazon\.com/.test(url)) {
+    } else if (/amazon\.com/.test(url)) {
       setLinkType('amazon');
-    }
-     else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
+    } else if (/^(https?:\/\/)?([\w\d-]+\.)+[\w-]+/.test(url)) {
       setLinkType('website');
-    }
-     else {
+    } else {
       setLinkType('unknown');
     }
   };
 
+  // Toggle a tag in the selectedTags state array
+  const toggleTag = (tag: string) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
   const handleSave = () => {
-    onSave({ name, url: scannedData, notes, linkType });
+    onSave({ name, url: scannedData, notes, linkType, tags: selectedTags });
     setScannedData('');
     setName('');
     setNotes('');
-    setLinkType('unknown'); // Reset the link type
+    setLinkType('unknown');
+    setSelectedTags([]);
   };
 
   const handleDiscard = () => {
     setScannedData('');
     setName('');
     setNotes('');
-    setLinkType('unknown'); // Reset the link type
+    setLinkType('unknown');
+    setSelectedTags([]);
   };
 
   const renderLinkIcon = () => {
@@ -120,29 +124,24 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
   return (
     <div className="mt-6">
       <div className="flex justify-center items-center mb-4">
-        <div className="flex justify space-x-2">
-          <div className="radio-inputs">
-            <label className="radio">
-              <input type="radio" name="mode" checked={showScanner} onChange={() => setShowScanner(true)} />
-              <span className="name">Scan QR code</span>
-            </label>
-            <label className="radio">
-              <input type="radio" name="mode" checked={!showScanner} onChange={() => setShowScanner(false)} />
-              <span className="name">Show my QR</span>
-            </label>
-          </div>
+        <div className="radio-inputs">
+          <label className="radio">
+            <input type="radio" name="mode" checked={showScanner} onChange={() => setShowScanner(true)} />
+            <span className="name">Scan QR code</span>
+          </label>
+          <label className="radio">
+            <input type="radio" name="mode" checked={!showScanner} onChange={() => setShowScanner(false)} />
+            <span className="name">Show my QR</span>
+          </label>
         </div>
       </div>
 
-      {/* Common container to ensure both scanner and QR display match sizes */}
       <div className="rounded-lg border p-4 bg-white shadow-lg w-full flex justify-center items-center">
         {showScanner ? (
           <Scanner
             onScan={handleScan}
             onError={(error) => console.error(error)}
-            classNames={{
-              container: 'h-full w-full', // Ensure full height and width matching the QR code display
-            }}
+            classNames={{ container: 'h-full w-full' }}
           />
         ) : (
           <div className="w-full h-full flex justify-center items-center">
@@ -161,9 +160,8 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
       </div>
 
       {scannedData && (
-        <div className="card-glassmorphic mt-4">
+        <div className="card-glassmorphic mt-4 p-4">
           <div className="flex items-center space-x-2 mb-2">
-            {/* Show the detected link type */}
             {renderLinkIcon()}
             <p className="ml-2">{scannedData}</p>
           </div>
@@ -180,6 +178,31 @@ const ScanArea: React.FC<ScanAreaProps> = ({ onSave }) => {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
           />
+          {/* New: Multi-select tag chips below the Notes field */}
+          {customTags.length > 0 && (
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-1">Select Tags</label>
+              <div className="flex flex-wrap gap-2">
+                {customTags.map((tag, index) => {
+                  const isSelected = selectedTags.includes(tag);
+                  return (
+                    <button
+                      key={index}
+                      type="button"
+                      onClick={() => toggleTag(tag)}
+                      className={`px-3 py-1 rounded-full text-sm ${
+                        isSelected
+                          ? 'bg-blue-500 text-white'
+                          : 'border border-blue-500 text-blue-500'
+                      }`}
+                    >
+                      {tag}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
           <div className="flex justify-between">
             <button className="bg-green-500 text-white p-2 rounded shadow" onClick={handleSave}>
               Save
